@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Prompt Builder - Create customized prompts for ChatGPT, Claude, and other AI tools">
+    <title>✈️ Prompt Copilot</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="header-bar">
+            <div class="header-left">
+                <div class="app-title">
+                    ✈️ Prompt Copilot
+                    <span class="version-badge">v7.2 Smart</span>
+                </div>
+                <div class="developer-credit">Developed by Neurora_AITec Studio</div>
+            </div>
+            <div class="header-right">
+                <a href="https://youtu.be/QCm8gAg9vqg?si=Dyoeo-FCNmZ5mWfd" target="_blank" class="yt-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Tutorial
+                </a>
+                <div id="status-badge" class="status-badge">🟡 Loading...</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel: Configuration -->
+            <div class="left-panel">
+                <!-- Language Toggle -->
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="zh">🇹🇼 Taiwan (繁體中文)</button>
+                    <button class="lang-btn" data-lang="en">🌏 Global (English)</button>
+                </div>
+
+                <!-- Guide Banner -->
+                <div id="guide-banner" class="guide-banner">
+                    <span class="guide-icon">💡</span>
+                    <span id="guide-text">👈 <b>左側自由探索</b>模組與參數，設定完成後別忘了點擊右側 <b>[複製 Prompt]</b> 帶走你的咒語！</span>
+                </div>
+
+                <!-- CONFIG Section -->
+                <div class="section-label" id="lbl-config">CONFIG (設定)</div>
+
+                <div class="form-group">
+                    <label for="library-select" id="lbl-library">📚 模組庫:</label>
+                    <select id="library-select" class="form-control">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="role-select" id="lbl-role">📂 類別:</label>
+                    <select id="role-select" class="form-control">
+                        <option value="">Select library first...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="task-select" id="lbl-task">⚡ 任務:</label>
+                    <select id="task-select" class="form-control">
+                        <option value="">Select category first...</option>
+                    </select>
+                </div>
+
+                <hr class="divider">
+
+                <!-- VARIABLES Section -->
+                <div class="section-label" id="lbl-vars">VARIABLES (參數)</div>
+                <div id="variables-container">
+                    <p class="placeholder-text">Select a task to see available options...</p>
+                </div>
+            </div>
+
+            <!-- Right Panel: Result -->
+            <div class="right-panel">
+                <div class="section-label" id="lbl-result">RESULT (結果)</div>
+
+                <div class="form-group">
+                    <label for="output-mode-select" id="lbl-output-mode">🎛️ 輸出模式:</label>
+                    <select id="output-mode-select" class="form-control">
+                        <option value="">🚀 智能預設 (Auto)</option>
+                    </select>
+                </div>
+
+                <textarea id="result-area" class="result-textarea" placeholder="Your generated prompt will appear here..." readonly></textarea>
+
+                <button id="copy-btn" class="copy-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="copy-btn-text">複製 Prompt (Copy)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/dataLoader.js"></script>
+    <script src="js/promptBuilder.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('✅ Service Worker registered'))
+                    .catch(err => console.log('❌ Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
