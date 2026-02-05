@@ -394,14 +394,20 @@ class PromptCopilot {
 
         // Add output mode prefix
         const prefix = this.elements.outputModeSelect.value;
-let finalPrompt = prefix + rawPrompt;
+        let finalPrompt = prefix + rawPrompt;
 
-// SANITIZATION FIX:
-// Some users reported %20 appearing in the output (URL encoding artifacts).
-// We forcibly replace them with spaces just in case.
-finalPrompt = finalPrompt.replace(/%20/g, ' ');
+        // --- IPAD & ENCODING FIX ---
+        try {
+            // 1. First, decode it in case any source data was encoded
+            finalPrompt = decodeURIComponent(finalPrompt);
+        } catch (e) {
+            // If it fails (e.g. contains % that isn't part of an encoding), ignore and use raw
+        }
 
-this.elements.resultArea.value = finalPrompt;
+        // 2. Double-check: Replace any remaining %20 with actual spaces
+        finalPrompt = finalPrompt.replace(/%20/g, ' ');
+
+        this.elements.resultArea.value = finalPrompt;
     }
 
     /**
