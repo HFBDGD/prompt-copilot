@@ -394,7 +394,14 @@ class PromptCopilot {
 
         // Add output mode prefix
         const prefix = this.elements.outputModeSelect.value;
-        this.elements.resultArea.value = prefix + rawPrompt;
+let finalPrompt = prefix + rawPrompt;
+
+// SANITIZATION FIX:
+// Some users reported %20 appearing in the output (URL encoding artifacts).
+// We forcibly replace them with spaces just in case.
+finalPrompt = finalPrompt.replace(/%20/g, ' ');
+
+this.elements.resultArea.value = finalPrompt;
     }
 
     /**
